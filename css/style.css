@@ -1579,16 +1579,11 @@ footer {
 
     z-index: 10;
 
-    box-shadow:
-        0 6px 0 rgba(30,91,120,.18),
-        0 Продолжаю CSS ровно с места, где оборвалось. После:
+  box-shadow:
+    0 6px 0 rgba(30, 91, 120, 0.18),
+    0 10px 20px rgba(30, 91, 120, 0.15);
 
-```css
-box-shadow:
-    0 6px 0 rgba(30,91,120,.18),
-            0 10px 20px rgba(30,91,120,.15);
-
-    transition: .2s;
+transition: 0.2s;
 }
 
 .map-district:hover {
@@ -3002,4 +2997,106 @@ box-shadow:
 
         text-align: center;
     }
+}
+
+/* =====================================================
+   AI ANALYSIS
+===================================================== */
+
+#aiAnalysisBox {
+    margin-top: 24px;
+}
+
+#aiAnalysisContent {
+    line-height: 1.7;
+    color: #31566b;
+    font-size: 15px;
+}
+
+.ai-section {
+    padding: 18px 20px;
+    margin: 14px 0;
+
+    background: #f7fffc;
+
+    border: 1px solid rgba(20, 160, 120, 0.15);
+    border-radius: 16px;
+
+    transition: 0.2s;
+}
+
+.ai-section:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 18px rgba(30, 91, 120, 0.08);
+}
+
+.ai-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: 0 0 10px;
+
+    color: #087f67;
+    font-size: 17px;
+}
+
+.ai-section p {
+    margin: 0;
+
+    color: #456779;
+    line-height: 1.7;
+}
+
+.ai-section strong {
+    color: #174f70;
+}
+
+.ai-number {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #32d3a4;
+    color: white;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.ai-loading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 20px;
+
+    background: #f3fffb;
+    border-radius: 16px;
+}
+
+.ai-loading-robot {
+    font-size: 34px;
+}
+
+.ai-loading strong {
+    display: block;
+    margin-bottom: 4px;
+
+    color: #087f67;
+}
+
+.ai-loading p {
+    margin: 0;
+    color: #668392;
 }

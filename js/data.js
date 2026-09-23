@@ -586,5 +586,116 @@ const simulationConfig = {
         weakestDistrict: 0.3,
         criticalPenalty: 1
     }
+}
+
+
+// ======================================================
+// 8. КАРЬЕРА АКИМА — УРОВНИ
+// ======================================================
+
+const gameLevels = {
+
+    1: {
+        id: 1,
+        icon: "🏙️",
+        name: "Первые 100 дней",
+
+        description:
+            "Сформируйте первую программу развития Астаны.",
+
+        baseBudget: 100,
+
+        targetScore: 55,
+
+        maxCritical: 2,
+
+        minWeakestDistrict: 0,
+
+        reward: 20
+    },
+
+
+    2: {
+        id: 2,
+        icon: "🌨️",
+        name: "Зимний вызов",
+
+        description:
+            "Город входит в сложный зимний период. " +
+            "Необходимо повысить устойчивость городской системы.",
+
+        baseBudget: 100,
+
+        targetScore: 57,
+
+        maxCritical: 2,
+
+        minWeakestDistrict: 0,
+
+        reward: 25
+    },
+
+
+    3: {
+        id: 3,
+        icon: "⚖️",
+        name: "Равное развитие",
+
+        description:
+            "Теперь важно не только улучшить общий Score, " +
+            "но и подтянуть самый слабый район.",
+
+        baseBudget: 100,
+
+        targetScore: 59,
+
+        maxCritical: 2,
+
+        minWeakestDistrict: 53,
+
+        reward: 30
+    },
+
+
+    4: {
+        id: 4,
+        icon: "🚨",
+        name: "Ни одного забытого района",
+
+        description:
+            "Сократите критические показатели и обеспечьте " +
+            "более равномерное развитие районов.",
+
+        baseBudget: 100,
+
+        targetScore: 61,
+
+        maxCritical: 1,
+
+        minWeakestDistrict: 55,
+
+        reward: 35
+    },
+
+
+    5: {
+        id: 5,
+        icon: "👑",
+        name: "Астана будущего",
+
+        description:
+            "Финальный этап. Создайте максимально устойчивую " +
+            "стратегию развития столицы.",
+
+        baseBudget: 100,
+
+        targetScore: 63,
+
+        maxCritical: 0,
+
+        minWeakestDistrict: 57,
+
+        reward: 50
+    }
 
 };

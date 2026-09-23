@@ -52,13 +52,69 @@ document.addEventListener("DOMContentLoaded", () => {
     // СОСТОЯНИЕ
     // ==================================================
 
-    let selectedDistrict = "nura";
-    let selectedMeasures = [];
-    let currentCategory = null;
+   let selectedDistrict = "nura";
+let selectedMeasures = [];
+let currentCategory = null;
+let lastSimulationResult = null;
 
-    const MAX_BUDGET = simulationConfig.budget;
-    const MAX_DECISIONS = simulationConfig.requiredDecisions;
 
+// ======================================================
+// КАРЬЕРА
+// ======================================================
+
+let career = {
+
+    level: Number(
+        localStorage.getItem("qanatLevel")
+    ) || 1,
+
+    bonusMoney: Number(
+        localStorage.getItem("qanatBonusMoney")
+    ) || 0,
+
+    bestScores: JSON.parse(
+        localStorage.getItem("qanatBestScores") || "{}"
+    )
+
+};
+
+
+let currentLevel =
+    gameLevels[career.level];
+
+
+let MAX_BUDGET =
+    currentLevel.baseBudget +
+    career.bonusMoney;
+
+
+const MAX_DECISIONS =
+    simulationConfig.requiredDecisions;
+
+
+
+    // ======================================================
+// СОХРАНЕНИЕ КАРЬЕРЫ
+// ======================================================
+
+function saveCareer() {
+
+    localStorage.setItem(
+        "qanatLevel",
+        career.level
+    );
+
+    localStorage.setItem(
+        "qanatBonusMoney",
+        career.bonusMoney
+    );
+
+    localStorage.setItem(
+        "qanatBestScores",
+        JSON.stringify(career.bestScores)
+    );
+
+}
 
     // ==================================================
     // ЭЛЕМЕНТЫ
@@ -144,26 +200,87 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
+
+// ======================================================
+// ИНФОРМАЦИЯ ОБ УРОВНЕ
+// ======================================================
+
+function showLevelIntro() {
+
+    const level =
+        currentLevel;
+
+
+    alert(
+        `${level.icon} УРОВЕНЬ ${level.id}\n\n` +
+
+        `${level.name}\n\n` +
+
+        `${level.description}\n\n` +
+
+        `💰 Бюджет: ${MAX_BUDGET}\n` +
+
+        `📋 Решений: 5\n\n` +
+
+        `🎯 Цель Score: ${level.targetScore}\n` +
+
+        (
+            level.minWeakestDistrict > 0
+                ? `📍 Слабейший район: не ниже ${level.minWeakestDistrict}\n`
+                : ""
+        ) +
+
+        `⚠️ Критических: не больше ${level.maxCritical}\n\n` +
+
+        `🏆 Награда: +${level.reward} 💰`
+    );
+
+}
+
+
+
     // ==================================================
     // ГЛАВНАЯ → ИГРА
     // ==================================================
 
-    if (startButton) {
+  if (startButton) {
 
-        startButton.addEventListener("click", () => {
+    startButton.addEventListener("click", () => {
 
-            homeScreen.style.display = "none";
-            gameScreen.classList.add("active");
+        configureCurrentLevel();
 
-            selectDistrict(selectedDistrict);
-            updateGameUI();
+        homeScreen.style.display = "none";
 
-            window.scrollTo(0, 0);
+        resultsScreen.classList.remove("active");
 
+        gameScreen.classList.add("active");
+
+
+        selectedMeasures = [];
+
+        selectedDistrict = "nura";
+
+        currentCategory = null;
+
+        lastSimulationResult = null;
+
+
+        selectDistrict(selectedDistrict);
+
+        updateGameUI();
+
+
+        showLevelIntro();
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
         });
 
-    }
+    });
 
+}
 
     // ==================================================
     // ИГРА → ГЛАВНАЯ
@@ -984,14 +1101,15 @@ simulateButton.addEventListener("click", () => {
         return;
     }
 
+    // Сохраняем результат для AI
+    lastSimulationResult = result;
+
     showResults(result);
 
 });
 
 
-// ==================================================
-// ПОКАЗАТЬ ЭКРАН РЕЗУЛЬТАТОВ
-// ==================================================
+
 
 function showResults(result) {
 
@@ -1042,6 +1160,23 @@ function showResults(result) {
     // Критические показатели
     resultCritical.textContent =
         result.criticalCount;
+
+        // ======================================================
+// СОХРАНЯЕМ ЛУЧШИЙ SCORE
+// ======================================================
+
+const oldBest =
+    career.bestScores[career.level] || 0;
+
+
+if (result.finalScore > oldBest) {
+
+    career.bestScores[career.level] =
+        result.finalScore;
+
+    saveCareer();
+
+}
 
 
     // Районы
@@ -1132,4 +1267,509 @@ function renderDistrictResults(result) {
 
 }
 
+
+
+
+// ======================================================
+// ФОРМАТИРОВАНИЕ AI ОТВЕТА
+// ======================================================
+
+function formatAIAnalysis(text) {
+
+    if (!text) {
+        return "<p>AI не вернул анализ.</p>";
+    }
+
+    // Защита от HTML
+    let formatted = text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    // **жирный текст**
+    formatted = formatted.replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+    );
+
+    // Заголовки вида:
+    // 1. Общая оценка результата
+    // 2. Что было сделано хорошо
+    formatted = formatted.replace(
+        /(?:^|\n)(\d+)\.\s*(?:<strong>)?([^<\n]+)(?:<\/strong>)?/g,
+        '</p><div class="ai-section"><h3><span class="ai-number">$1</span>$2</h3><p>'
+    );
+
+    // Маркированные пункты
+    formatted = formatted.replace(
+        /\n-\s+/g,
+        "<br>• "
+    );
+
+    // Переносы строк
+    formatted = formatted.replace(
+        /\n/g,
+        "<br>"
+    );
+
+    // Убираем пустой первый абзац
+    formatted = formatted.replace(
+        /^<\/p>/,
+        ""
+    );
+
+    // Закрываем последний блок
+    formatted += "</p></div>";
+
+    return formatted;
+}
+
+// ======================================================
+// AI АНАЛИЗ
+// ======================================================
+
+if (aiAnalysisButton) {
+
+    aiAnalysisButton.addEventListener("click", async () => {
+
+        if (!lastSimulationResult) {
+            alert("Сначала запустите симуляцию.");
+            return;
+        }
+
+        // Показываем блок AI
+        if (aiAnalysisBox) {
+            aiAnalysisBox.style.display = "block";
+        }
+
+        // Сохраняем текст кнопки
+        const oldButtonText = aiAnalysisButton.textContent;
+
+        aiAnalysisButton.disabled = true;
+        aiAnalysisButton.textContent = "AI анализирует...";
+
+        if (aiAnalysisContent) {
+            aiAnalysisContent.innerHTML = `
+    <div class="ai-loading">
+        <span class="ai-loading-robot">🤖</span>
+
+        <div>
+            <strong>Городской советник анализирует сценарий...</strong>
+            <p>
+                Изучаем ваши решения, показатели районов
+                и эффективность распределения бюджета.
+            </p>
+        </div>
+    </div>
+`;
+        }
+
+        try {
+
+            // Собираем выбранные решения
+            const decisions = selectedMeasures.map(selected => {
+
+                const measure = measures.find(
+                    item => item.id === selected.measureId
+                );
+
+                return {
+                    id: selected.measureId,
+
+                    name: measure
+                        ? measure.name
+                        : selected.measureId,
+
+                    category: selected.category,
+
+                    district: selected.district
+                        ? districts[selected.district]?.name
+                        : "Весь город",
+
+                    cost: selected.cost
+                };
+
+            });
+
+
+            // Формируем данные для AI
+            const requestData = {
+
+                decisions: decisions,
+
+                result: {
+
+                    baseScore:
+                        lastSimulationResult.baseScore,
+
+                    finalScore:
+                        lastSimulationResult.finalScore,
+
+                    improvement:
+                        lastSimulationResult.improvement,
+
+                    cityAverage:
+                        lastSimulationResult.cityAverage,
+
+                    weakestDistrictScore:
+                        lastSimulationResult.weakestDistrictScore,
+
+                    criticalCount:
+                        lastSimulationResult.criticalCount,
+
+                    districts:
+                        lastSimulationResult.districts
+                }
+            };
+
+
+            // Отправляем запрос серверу
+            const response = await fetch(
+                "http://localhost:3000/api/analyze",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(requestData)
+                }
+            );
+
+
+            if (!response.ok) {
+
+                let message =
+                    `Ошибка сервера: ${response.status}`;
+
+                try {
+
+                    const errorData =
+                        await response.json();
+
+                    if (errorData.error) {
+                        message = errorData.error;
+                    }
+
+                } catch (error) {
+                    // Сервер вернул не JSON
+                }
+
+                throw new Error(message);
+            }
+
+
+            const data = await response.json();
+
+
+            if (!data.analysis) {
+                throw new Error(
+                    "AI не вернул результат анализа."
+                );
+            }
+
+
+            // Выводим результат
+          if (aiAnalysisContent) {
+    aiAnalysisContent.innerHTML =
+        formatAIAnalysis(data.analysis);
+}
+
+
+        } catch (error) {
+
+            console.error("Ошибка AI:", error);
+
+            if (aiAnalysisContent) {
+
+                aiAnalysisContent.textContent =
+                    "Не удалось получить AI-анализ.\n\n" +
+                    error.message;
+
+            }
+
+        } finally {
+
+            aiAnalysisButton.disabled = false;
+
+            aiAnalysisButton.textContent =
+                oldButtonText;
+        }
+
+    });
+
+}
+
+
+// ======================================================
+// НОВАЯ ИГРА
+// ======================================================
+
+if (newGameButton) {
+
+    newGameButton.addEventListener("click", () => {
+
+        completeCurrentLevel();
+
+if (
+    lastSimulationResult &&
+    !checkLevelCompleted(lastSimulationResult)
+) {
+    return;
+}
+
+        // Очищаем выбранные решения
+        selectedMeasures = [];
+
+        // Возвращаем начальный район
+        selectedDistrict = "nura";
+
+        // Сбрасываем выбранную категорию
+        currentCategory = null;
+
+        // Сбрасываем результат предыдущей симуляции
+        lastSimulationResult = null;
+
+        // Скрываем результаты
+        resultsScreen.classList.remove("active");
+
+        // Показываем игровой экран
+        gameScreen.classList.add("active");
+
+        // Возвращаем категории
+        if (categoriesView) {
+            categoriesView.classList.remove("hidden");
+        }
+
+        // Скрываем список мероприятий
+        if (measuresView) {
+            measuresView.classList.remove("active");
+        }
+
+        // Сбрасываем выбранный район на карте
+        districtButtons.forEach(button => {
+
+            button.classList.remove("selected");
+
+            if (button.dataset.district === selectedDistrict) {
+                button.classList.add("selected");
+            }
+
+        });
+
+        // Скрываем старый AI-анализ
+        if (aiAnalysisBox) {
+            aiAnalysisBox.style.display = "none";
+        }
+
+        // Удаляем старый текст AI
+        if (aiAnalysisContent) {
+            aiAnalysisContent.innerHTML = "";
+        }
+
+        // Обновляем данные района
+        selectDistrict(selectedDistrict);
+
+        // Обновляем бюджет, решения и интерфейс
+        updateGameUI();
+
+        // Возвращаем страницу наверх
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+}
+
+// ВАЖНО: этот код уже был в файле.
+// Его не удаляем.
 });
+
+
+
+
+// ======================================================
+// НАСТРОЙКА ТЕКУЩЕГО УРОВНЯ
+// ======================================================
+
+function configureCurrentLevel() {
+
+    currentLevel =
+        gameLevels[career.level];
+
+
+    MAX_BUDGET =
+        currentLevel.baseBudget +
+        career.bonusMoney;
+
+
+    // Валидатор тоже должен знать новый бюджет
+    simulationConfig.budget =
+        MAX_BUDGET;
+
+
+    console.log(
+        `Уровень ${career.level}:`,
+        currentLevel.name
+    );
+
+    console.log(
+        `Бюджет: ${MAX_BUDGET}`
+    );
+
+}
+
+
+// ======================================================
+// ПРОВЕРКА ПРОХОЖДЕНИЯ УРОВНЯ
+// ======================================================
+
+function checkLevelCompleted(result) {
+
+    const level =
+        currentLevel;
+
+
+    const scorePassed =
+        result.finalScore >=
+        level.targetScore;
+
+
+    const criticalPassed =
+        result.criticalCount <=
+        level.maxCritical;
+
+
+    const weakestPassed =
+        level.minWeakestDistrict <= 0 ||
+        result.weakestDistrictScore >=
+        level.minWeakestDistrict;
+
+
+    return (
+        scorePassed &&
+        criticalPassed &&
+        weakestPassed
+    );
+
+}
+
+// ======================================================
+// ЗАВЕРШЕНИЕ УРОВНЯ
+// ======================================================
+
+function completeCurrentLevel() {
+
+    if (!lastSimulationResult) {
+        return;
+    }
+
+
+    const passed =
+        checkLevelCompleted(
+            lastSimulationResult
+        );
+
+
+    if (!passed) {
+
+        alert(
+            `❌ УРОВЕНЬ НЕ ПРОЙДЕН\n\n` +
+
+            `Ваш Score: ` +
+            `${lastSimulationResult.finalScore.toFixed(2)}\n` +
+
+            `Нужно: ${currentLevel.targetScore}\n\n` +
+
+            `Слабейший район: ` +
+            `${lastSimulationResult.weakestDistrictScore.toFixed(2)}\n` +
+
+            `Критических: ` +
+            `${lastSimulationResult.criticalCount}\n\n` +
+
+            `Попробуйте изменить решения.`
+        );
+
+        return;
+    }
+
+
+    // Сколько игрок потратил
+    const spent =
+        MAX_BUDGET -
+        lastSimulationResult
+            .validation
+            .remainingBudget;
+
+
+    // Сколько осталось
+    const remaining =
+        MAX_BUDGET - spent;
+
+
+    // Награда уровня
+    const reward =
+        currentLevel.reward;
+
+
+    // Бонус для следующего уровня:
+    // остаток + награда
+    career.bonusMoney =
+        remaining +
+        reward;
+
+
+    const completedLevel =
+        career.level;
+
+
+    // Следующий уровень
+    if (career.level < 5) {
+
+        career.level++;
+
+    }
+
+
+    saveCareer();
+
+
+    if (completedLevel < 5) {
+
+        alert(
+            `🎉 УРОВЕНЬ ${completedLevel} ПРОЙДЕН!\n\n` +
+
+            `⭐ Score: ` +
+            `${lastSimulationResult.finalScore.toFixed(2)}\n\n` +
+
+            `💰 Осталось: ${remaining}\n` +
+
+            `🏆 Награда: +${reward}\n\n` +
+
+            `💵 Бонус следующего уровня: ` +
+            `${career.bonusMoney}\n\n` +
+
+            `🔓 Открыт уровень ${career.level}: ` +
+            `${gameLevels[career.level].name}`
+        );
+
+    } else {
+
+        alert(
+            `👑 ПОЗДРАВЛЯЕМ!\n\n` +
+
+            `Вы завершили карьеру акима!\n\n` +
+
+            `Финальный Score: ` +
+            `${lastSimulationResult.finalScore.toFixed(2)}`
+        );
+
+    }
+
+};
+
+
+
