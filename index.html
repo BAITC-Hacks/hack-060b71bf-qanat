@@ -733,6 +733,261 @@
 </section>
 
 <script src="js/data.js"></script>
+
+
+
+
+<!-- ==================================================
+     RESULTS SCREEN
+================================================== -->
+
+<section id="resultsScreen" class="results-screen">
+
+    <div class="results-container">
+
+        <div class="results-top">
+
+            <div class="result-badge">
+                🏆 СИМУЛЯЦИЯ ЗАВЕРШЕНА
+            </div>
+
+            <h1 class="results-title">
+                Результаты управления
+            </h1>
+
+            <p>
+                Посмотрим, как ваши решения изменили Астану
+                за 8 кварталов.
+            </p>
+
+        </div>
+
+
+        <!-- SCORE -->
+
+        <div class="result-score-card">
+
+            <span class="result-score-label">
+                ASTANA QUALITY OF LIFE SCORE
+            </span>
+
+
+            <div class="score-comparison">
+
+                <div class="score-before">
+                    <small>БЫЛО</small>
+                    <strong id="resultBeforeScore">
+                        52.56
+                    </strong>
+                </div>
+
+
+                <div class="score-arrow">
+                    ➜
+                </div>
+
+
+                <div class="score-after">
+                    <small>СТАЛО</small>
+                    <strong id="resultAfterScore">
+                        0
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div
+                id="resultImprovement"
+                class="result-improvement"
+            >
+                +0
+            </div>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="result-summary">
+
+            <div class="result-stat">
+                <span>💰</span>
+
+                <div>
+                    <small>ПОТРАЧЕНО</small>
+
+                    <strong id="resultSpent">
+                        0/100
+                    </strong>
+                </div>
+            </div>
+
+
+            <div class="result-stat">
+                <span>🏙️</span>
+
+                <div>
+                    <small>СРЕДНИЙ БАЛЛ</small>
+
+                    <strong id="resultAverage">
+                        0
+                    </strong>
+                </div>
+            </div>
+
+
+            <div class="result-stat">
+                <span>📍</span>
+
+                <div>
+                    <small>СЛАБЕЙШИЙ РАЙОН</small>
+
+                    <strong id="resultWeakest">
+                        0
+                    </strong>
+                </div>
+            </div>
+
+
+            <div class="result-stat">
+                <span>⚠️</span>
+
+                <div>
+                    <small>КРИТИЧЕСКИХ</small>
+
+                    <strong id="resultCritical">
+                        0
+                    </strong>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- DISTRICTS -->
+
+        <div class="district-results-card">
+
+            <div class="results-section-title">
+
+                <div>
+                    <span>🗺️</span>
+
+                    <div>
+                        <small>
+                            ИЗМЕНЕНИЯ
+                        </small>
+
+                        <h2>
+                            Районы города
+                        </h2>
+                    </div>
+                </div>
+
+                <span class="two-years">
+                    📅 8 кварталов
+                </span>
+
+            </div>
+
+
+            <div
+                id="districtResults"
+                class="district-results"
+            >
+            </div>
+
+        </div>
+
+
+        <!-- AI -->
+
+        <div class="ai-result-card">
+
+            <div class="ai-result-icon">
+                🤖
+            </div>
+
+            <div class="ai-result-text">
+
+                <small>
+                    AI-СОВЕТНИК АКИМА
+                </small>
+
+                <h2>
+                    Хотите узнать, насколько удачен ваш сценарий?
+                </h2>
+
+                <p>
+                    AI проанализирует сильные стороны,
+                    риски и предложит направления
+                    дальнейшего развития города.
+                </p>
+
+            </div>
+
+
+            <button
+                id="aiAnalysisButton"
+                class="ai-analysis-button"
+            >
+                ✨ ПОЛУЧИТЬ AI-АНАЛИЗ
+            </button>
+
+        </div>
+
+
+        <!-- AI RESPONSE -->
+
+        <div
+            id="aiAnalysisBox"
+            class="ai-analysis-box"
+        >
+
+            <div class="ai-analysis-header">
+                🤖 Анализ городского советника
+            </div>
+
+            <div id="aiAnalysisContent">
+                AI-анализ появится здесь.
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="result-buttons">
+
+            <button
+                id="editScenarioButton"
+                class="edit-scenario-button"
+            >
+                ← Изменить решения
+            </button>
+
+
+            <button
+                id="newGameButton"
+                class="new-game-button"
+            >
+                🔄 Новая игра
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+<script src="js/validator.js"></script>
+
+<script src="js/simulator.js"></script>
+
 <script src="js/app.js"></script>
 
 </body>

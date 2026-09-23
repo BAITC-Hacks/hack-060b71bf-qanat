@@ -3,6 +3,49 @@
 // app.js
 // ======================================================
 
+const resultsScreen =
+    document.getElementById("resultsScreen");
+
+const resultBeforeScore =
+    document.getElementById("resultBeforeScore");
+
+const resultAfterScore =
+    document.getElementById("resultAfterScore");
+
+const resultImprovement =
+    document.getElementById("resultImprovement");
+
+const resultSpent =
+    document.getElementById("resultSpent");
+
+const resultAverage =
+    document.getElementById("resultAverage");
+
+const resultWeakest =
+    document.getElementById("resultWeakest");
+
+const resultCritical =
+    document.getElementById("resultCritical");
+
+const districtResults =
+    document.getElementById("districtResults");
+
+const aiAnalysisButton =
+    document.getElementById("aiAnalysisButton");
+
+const aiAnalysisBox =
+    document.getElementById("aiAnalysisBox");
+
+const aiAnalysisContent =
+    document.getElementById("aiAnalysisContent");
+
+const editScenarioButton =
+    document.getElementById("editScenarioButton");
+
+const newGameButton =
+    document.getElementById("newGameButton");
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
     // ==================================================
@@ -923,49 +966,170 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // ==================================================
-    // ЗАПУСТИТЬ СИМУЛЯЦИЮ
-    // ==================================================
 
-    simulateButton.addEventListener(
-        "click",
-        () => {
+  // ==================================================
+// ЗАПУСТИТЬ СИМУЛЯЦИЮ
+// ==================================================
 
-            if (
-                selectedMeasures.length !==
-                MAX_DECISIONS
-            ) {
+simulateButton.addEventListener("click", () => {
 
-                showMessage(
-                    "Для запуска необходимо принять ровно 5 решений."
-                );
+    const result = simulateScenario(selectedMeasures);
 
-                return;
-            }
+    if (!result.success) {
 
+        alert(
+            result.validation.errors.join("\n")
+        );
 
-            console.log(
-                "Выбранные решения:",
-                selectedMeasures
-            );
+        return;
+    }
+
+    showResults(result);
+
+});
 
 
-            showMessage(
-                "Отлично! 5 решений приняты. Следующим шагом подключим расчёт Astana Quality of Life Score."
-            );
+// ==================================================
+// ПОКАЗАТЬ ЭКРАН РЕЗУЛЬТАТОВ
+// ==================================================
 
-        }
-    );
+function showResults(result) {
+
+    // Скрываем игру
+    gameScreen.classList.remove("active");
+
+    // Показываем результаты
+    resultsScreen.classList.add("active");
 
 
-    // ==================================================
-    // СТАРТОВОЕ СОСТОЯНИЕ
-    // ==================================================
+    // Основной Score
+    resultBeforeScore.textContent =
+        result.baseScore.toFixed(2);
 
-    selectDistrict(
-        selectedDistrict
-    );
+    resultAfterScore.textContent =
+        result.finalScore.toFixed(2);
 
-    updateGameUI();
+
+    // Изменение Score
+    const improvement =
+        result.improvement;
+
+    resultImprovement.textContent =
+        improvement >= 0
+            ? `+${improvement.toFixed(2)}`
+            : improvement.toFixed(2);
+
+
+    // Потраченный бюджет
+    const spent =
+        MAX_BUDGET -
+        result.validation.remainingBudget;
+
+    resultSpent.textContent =
+        `${spent}/${MAX_BUDGET}`;
+
+
+    // Средний балл
+    resultAverage.textContent =
+        result.cityAverage.toFixed(2);
+
+
+    // Слабейший район
+    resultWeakest.textContent =
+        result.weakestDistrictScore.toFixed(2);
+
+
+    // Критические показатели
+    resultCritical.textContent =
+        result.criticalCount;
+
+
+    // Районы
+    renderDistrictResults(result);
+
+
+    // Показываем страницу сверху
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+// ==================================================
+// РЕЗУЛЬТАТЫ РАЙОНОВ
+// ==================================================
+
+function renderDistrictResults(result) {
+
+    districtResults.innerHTML = "";
+
+    const icons = {
+        esil: "🏙️",
+        almaty: "🏢",
+        saryarka: "🏠",
+        baikonur: "🏡",
+        nura: "🏘️"
+    };
+
+
+    Object.entries(result.districts)
+        .forEach(([districtId, district]) => {
+
+            const oldScore =
+                districts[districtId].score;
+
+            const newScore =
+                district.newScore;
+
+            const difference =
+                newScore - oldScore;
+
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "district-result";
+
+
+            card.innerHTML = `
+
+                <div class="district-result-icon">
+                    ${icons[districtId]}
+                </div>
+
+                <h3>
+                    ${district.name}
+                </h3>
+
+                <div class="district-result-scores">
+
+                    <span class="old-score">
+                        ${oldScore.toFixed(2)}
+                    </span>
+
+                    <span>→</span>
+
+                    <span class="new-score">
+                        ${newScore.toFixed(2)}
+                    </span>
+
+                </div>
+
+                <div class="district-change">
+                    ${difference >= 0 ? "+" : ""}
+                    ${difference.toFixed(2)}
+                </div>
+
+            `;
+
+
+            districtResults.appendChild(card);
+
+        });
+
+}
 
 });
