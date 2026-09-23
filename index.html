@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Аким на 5 часов — Astana City Simulator</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="game">
+
+    <!-- ОБЛАКА -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="logo">
+            <div class="logo-icon">🏙️</div>
+
+            <div>
+                <div class="logo-name">ASTANA</div>
+                <div class="logo-small">CITY SIMULATOR</div>
+            </div>
+        </div>
+
+
+        <nav class="nav">
+            <button class="nav-item active">🏠 Главная</button>
+            <button class="nav-item">👤 О проекте</button>
+            <button class="nav-item">📋 Правила</button>
+            <button class="nav-item">👥 Команда</button>
+        </nav>
+
+
+        <div class="ai-powered">
+            🤖
+            <span>AI POWERED</span>
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="hero">
+
+        <!-- LEFT -->
+        <section class="hero-left">
+
+            <div class="small-message">
+                Лучший город начинается с тебя! 💙
+            </div>
+
+            <div class="title-wrapper">
+
+                <div class="crown">👑</div>
+
+                <h1>
+                    <span class="title-yellow">АКИМ</span>
+
+                    <span class="title-blue">
+                        НА 5 ЧАСОВ
+                    </span>
+                </h1>
+
+            </div>
+
+
+            <div class="wood-label">
+                AI-СИМУЛЯТОР УПРАВЛЕНИЯ ГОРОДОМ
+            </div>
+
+
+            <p class="description">
+                Возьмите управление Астаной в свои руки.
+                Распределите бюджет, примите пять ключевых
+                решений и узнайте, каким станет город
+                через два года.
+            </p>
+
+
+            <button id="startGame" class="start-button">
+
+                <span>НАЧАТЬ ИГРУ</span>
+
+                <span class="button-arrow">➜</span>
+
+            </button>
+
+        </section>
+
+
+        <!-- CENTER CITY -->
+        <section class="city">
+
+            <div class="sun"></div>
+
+            <div class="city-ground">
+
+                <div class="road road-one"></div>
+                <div class="road road-two"></div>
+
+                <div class="building building-1">🏢</div>
+                <div class="building building-2">🏙️</div>
+                <div class="building building-3">🏫</div>
+                <div class="building building-4">🏥</div>
+
+                <div class="tree tree-1">🌳</div>
+                <div class="tree tree-2">🌳</div>
+                <div class="tree tree-3">🌲</div>
+                <div class="tree tree-4">🌳</div>
+
+                <button class="district esil">
+                    Есиль
+                </button>
+
+                <button class="district nura">
+                    Нура
+                </button>
+
+                <button class="district saryarka">
+                    Сарыарка
+                </button>
+
+                <button class="district almaty">
+                    Алматы
+                </button>
+
+                <button class="district baikonur">
+                    Байконур
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCORE -->
+        <aside class="score-panel">
+
+            <div class="score-ribbon">
+                ASTANA QUALITY OF LIFE
+            </div>
+
+            <div class="score-main">
+
+                <span class="chart-icon">📊</span>
+
+                <span class="score-number">
+                    52.56
+                </span>
+
+            </div>
+
+            <p class="score-description">
+                ТЕКУЩИЙ БАЛЛ ГОРОДА
+            </p>
+
+
+            <div class="district-score">
+
+                <div class="score-row blue">
+                    <span>🏙️ Есиль</span>
+                    <strong>62.99</strong>
+                </div>
+
+                <div class="score-row green">
+                    <span>🏢 Алматы</span>
+                    <strong>57.06</strong>
+                </div>
+
+                <div class="score-row purple">
+                    <span>🏘️ Сарыарка</span>
+                    <strong>54.65</strong>
+                </div>
+
+                <div class="score-row red">
+                    <span>🏠 Байконур</span>
+                    <strong>56.63</strong>
+                </div>
+
+                <div class="score-row orange">
+                    <span>🏫 Нура</span>
+                    <strong>49.18</strong>
+                </div>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+
+    <!-- BOTTOM -->
+
+    <section class="bottom-panel">
+
+        <div class="robot">
+            🤖
+
+            <div class="robot-message">
+                Готовы сделать<br>
+                Астану лучше? ✨
+            </div>
+        </div>
+
+
+        <div class="info-box">
+
+            <div class="info-icon">
+                💰
+            </div>
+
+            <div>
+                <strong>100</strong>
+                <span>БЮДЖЕТ</span>
+                <small>условных единиц</small>
+            </div>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <div class="info-icon">
+                📋
+            </div>
+
+            <div>
+                <strong>5</strong>
+                <span>РЕШЕНИЙ</span>
+                <small>управленческих мер</small>
+            </div>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <div class="info-icon">
+                🗺️
+            </div>
+
+            <div>
+                <strong>5</strong>
+                <span>РАЙОНОВ</span>
+                <small>города</small>
+            </div>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <div class="info-icon">
+                📅
+            </div>
+
+            <div>
+                <strong>8</strong>
+                <span>КВАРТАЛОВ</span>
+                <small>2 года</small>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        HACKALEM 2026 • ASTANA AI CITY SIMULATOR
+    </footer>
+
+</div>
+<!-- =========================
+     GAME SCREEN
+========================= -->
+
+<section id="gameScreen" class="game-screen">
+
+    <!-- Верхняя панель -->
+    <header class="game-header">
+
+        <div class="game-logo">
+            🏙️
+            <div>
+                <strong>АКИМ НА 5 ЧАСОВ</strong>
+                <small>ASTANA CITY SIMULATOR</small>
+            </div>
+        </div>
+
+        <div class="game-resources">
+
+            <div class="resource">
+                <span>💰</span>
+                <div>
+                    <small>БЮДЖЕТ</small>
+                    <strong>
+                        <span id="budgetValue">100</span>/100
+                    </strong>
+                </div>
+            </div>
+
+            <div class="resource">
+                <span>📋</span>
+                <div>
+                    <small>РЕШЕНИЯ</small>
+                    <strong>
+                        <span id="decisionCount">0</span>/5
+                    </strong>
+                </div>
+            </div>
+
+            <div class="resource score-resource">
+                <span>⭐</span>
+                <div>
+                    <small>ГОРОДСКОЙ SCORE</small>
+                    <strong>52.56</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <button id="backHome" class="back-home">
+            ← На главную
+        </button>
+
+    </header>
+
+
+    <!-- Основная игровая область -->
+
+    <div class="game-layout">
+
+        <!-- Левая панель -->
+
+        <aside class="district-panel">
+
+            <div class="panel-title">
+                <span>📍</span>
+
+                <div>
+                    <small>ВЫБРАННЫЙ РАЙОН</small>
+                    <h2 id="selectedDistrictName">Нура</h2>
+                </div>
+            </div>
+
+
+            <div class="district-current-score">
+                <span>Рейтинг района</span>
+                <strong id="selectedDistrictScore">49.18</strong>
+            </div>
+
+
+            <div id="districtStats" class="district-stats">
+
+                <div class="stat">
+                    <div>
+                        <span>🚗 Разгрузка дорог</span>
+                        <strong id="statT1">55</strong>
+                    </div>
+
+                    <div class="progress">
+                        <div id="barT1" style="width:55%"></div>
+                    </div>
+                </div>
+
+
+                <div class="stat">
+                    <div>
+                        <span>🚌 Общественный транспорт</span>
+                        <strong id="statT2">40</strong>
+                    </div>
+
+                    <div class="progress">
+                        <div id="barT2" style="width:40%"></div>
+                    </div>
+                </div>
+
+
+                <div class="stat">
+                    <div>
+                        <span>🌳 Озеленение</span>
+                        <strong id="statE1">45</strong>
+                    </div>
+
+                    <div class="progress">
+                        <div id="barE1" style="width:45%"></div>
+                    </div>
+                </div>
+
+
+                <div class="stat">
+                    <div>
+                        <span>🌤️ Качество воздуха</span>
+                        <strong id="statE2">65</strong>
+                    </div>
+
+                    <div class="progress">
+                        <div id="barE2" style="width:65%"></div>
+                    </div>
+                </div>
+
+
+                <div class="stat critical">
+                    <div>
+                        <span>🏫 Школы и детсады</span>
+                        <strong id="statS1">38</strong>
+                    </div>
+
+                    <div class="progress">
+                        <div id="barS1" style="width:38%"></div>
+                    </div>
+                </div>
+
+
+                <div class="stat critical">
+                    <div>
+                        <span>🏥 Медицина</span>
+                        <strong id="statS2">35</strong>
+                    </div>
+
+                    <div class="progress">
+                        <div id="barS2" style="width:35%"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ЦЕНТРАЛЬНАЯ КАРТА -->
+
+        <main class="game-map">
+
+            <div class="map-heading">
+                <div>
+                    <small>ИНТЕРАКТИВНАЯ КАРТА</small>
+                    <h2>Астана</h2>
+                </div>
+
+                <div class="map-tip">
+                    👆 Выберите район
+                </div>
+            </div>
+
+
+            <div class="astana-map">
+
+                <div class="river"></div>
+
+
+                <button
+                    class="map-district map-esil"
+                    data-district="esil">
+
+                    <span class="district-icon">🏙️</span>
+
+                    <strong>Есиль</strong>
+
+                    <small>62.99</small>
+
+                </button>
+
+
+                <button
+                    class="map-district map-nura selected"
+                    data-district="nura">
+
+                    <span class="district-icon">🏘️</span>
+
+                    <strong>Нура</strong>
+
+                    <small>49.18</small>
+
+                </button>
+
+
+                <button
+                    class="map-district map-saryarka"
+                    data-district="saryarka">
+
+                    <span class="district-icon">🏠</span>
+
+                    <strong>Сарыарка</strong>
+
+                    <small>54.65</small>
+
+                </button>
+
+
+                <button
+                    class="map-district map-almaty"
+                    data-district="almaty">
+
+                    <span class="district-icon">🏢</span>
+
+                    <strong>Алматы</strong>
+
+                    <small>57.06</small>
+
+                </button>
+
+
+                <button
+                    class="map-district map-baikonur"
+                    data-district="baikonur">
+
+                    <span class="district-icon">🏡</span>
+
+                    <strong>Байконур</strong>
+
+                    <small>56.63</small>
+
+                </button>
+
+
+                <!-- декоративные элементы -->
+
+                <span class="map-tree tree-a">🌳</span>
+                <span class="map-tree tree-b">🌲</span>
+                <span class="map-tree tree-c">🌳</span>
+                <span class="map-tree tree-d">🌲</span>
+
+                <span class="map-building build-a">🏢</span>
+                <span class="map-building build-b">🏫</span>
+                <span class="map-building build-c">🏥</span>
+
+            </div>
+
+        </main>
+
+
+        <!-- ПРАВАЯ ПАНЕЛЬ -->
+
+        <aside class="action-panel">
+
+            <div class="action-title">
+                <span>🏗️</span>
+
+                <div>
+                    <small>УПРАВЛЕНИЕ ГОРОДОМ</small>
+                    <h2>Мероприятия</h2>
+                </div>
+            </div>
+
+
+            <p class="action-description">
+                Выберите направление развития города.
+            </p>
+
+
+
+<!-- ==========================================
+     КАТЕГОРИИ
+========================================== -->
+
+<div id="categoriesView" class="categories">
+
+    <button class="category transport">
+        <span>🚌</span>
+
+        <div>
+            <strong>Транспорт</strong>
+            <small>T1 • T2</small>
+        </div>
+
+        <b>→</b>
+    </button>
+
+
+    <button class="category ecology">
+        <span>🌳</span>
+
+        <div>
+            <strong>Экология</strong>
+            <small>E1 • E2</small>
+        </div>
+
+        <b>→</b>
+    </button>
+
+
+    <button class="category social">
+        <span>🏫</span>
+
+        <div>
+            <strong>Соцсфера</strong>
+            <small>S1 • S2</small>
+        </div>
+
+        <b>→</b>
+    </button>
+
+
+    <button class="category safety">
+        <span>🛡️</span>
+
+        <div>
+            <strong>Безопасность</strong>
+            <small>B1 • B2</small>
+        </div>
+
+        <b>→</b>
+    </button>
+
+
+    <button class="category services">
+        <span>⚙️</span>
+
+        <div>
+            <strong>Сервисы</strong>
+            <small>C1 • C2</small>
+        </div>
+
+        <b>→</b>
+    </button>
+
+</div>
+
+
+<!-- ==========================================
+     МЕРОПРИЯТИЯ M1-M14
+========================================== -->
+
+<div id="measuresView" class="measures-view">
+
+    <button
+        id="backCategories"
+        class="back-categories"
+    >
+        ← Все направления
+    </button>
+
+
+    <div class="measure-view-title">
+
+        <span id="measureCategoryIcon">
+            🚌
+        </span>
+
+        <div>
+
+            <small>
+                НАПРАВЛЕНИЕ
+            </small>
+
+            <h3 id="measureCategoryTitle">
+                Транспорт
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <!-- Сюда JavaScript вставит M1-M14 -->
+
+    <div
+        id="measuresList"
+        class="measures-list"
+    >
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     ВЫБРАННЫЕ РЕШЕНИЯ
+========================================== -->
+
+<div class="selected-actions">
+
+    <div>
+
+        <span>
+            Выбрано решений
+        </span>
+
+        <strong>
+            <span id="sideDecisionCount">
+                0
+            </span>/5
+        </strong>
+
+    </div>
+
+
+    <!-- Полоска 0/5 -->
+
+    <div class="decision-progress">
+
+        <div id="decisionProgress">
+        </div>
+
+    </div>
+
+
+    <!-- Сюда появятся выбранные решения -->
+
+    <div
+        id="selectedMeasuresList"
+        class="selected-measures-list"
+    >
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     СИМУЛЯЦИЯ
+========================================== -->
+
+<button
+    id="simulateButton"
+    class="simulate-button"
+    disabled
+>
+    🚀 ЗАПУСТИТЬ СИМУЛЯЦИЮ
+</button>
+
+
+</aside>
+
+    </div>
+
+</section>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
